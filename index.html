@@ -17,7 +17,23 @@
       <button id="btn-login">Se connecter</button>
     </div>
   </section>
+  
+// Utiliser dans ton code client (après import firebase/auth)
+import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+const auth = getAuth();
 
+async function envoyerReset(email) {
+  if (!email) return alert("Saisis ton email.");
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Email de réinitialisation envoyé. Vérifie ta boîte mail.");
+  } catch (e) {
+    console.error(e);
+    alert("Erreur: " + e.message);
+  }
+}
+
+  
   <!-- BLOC: Session -->
   <section id="bloc-session" class="bloc hidden">
     <h2>Session</h2>
