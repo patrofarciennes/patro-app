@@ -40,6 +40,14 @@ export async function getUserProfile(uid) {
   return snap.exists() ? snap.data() : null;
 }
 
+import { envoyerResetPassword } from "./auth-reset.js";
+
+document.getElementById("forgot-password-link").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const email = prompt("Saisissez votre adresse e‑mail pour recevoir le lien de réinitialisation");
+  if (email) await envoyerResetPassword(email.trim());
+});
+
 // ================================
 // BLOC: Session (login/logout + routeur d’affichage)
 // ================================
