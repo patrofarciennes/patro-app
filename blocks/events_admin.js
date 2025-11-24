@@ -4,6 +4,7 @@ import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/fi
 export const EventsAdminBloc = {
   init() {
     const btn = document.getElementById("btn-create-event");
+    if (!btn) return;
     if (!btn.dataset.wired) {
       btn.dataset.wired = "1";
       btn.addEventListener("click", async () => {
