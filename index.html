@@ -1,137 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Patro – Parents</title>
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <meta charset="UTF-8">
+  <title>Patro App</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Firebase SDK -->
+  <script type="module" src="app.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Patro – Parents</h1>
-    <nav>
-      <button data-tab="agenda">Agenda</button>
-      <button data-tab="photos">Photos</button>
-      <button data-tab="inscriptions">Inscriptions</button>
-      <button data-tab="chat-public">Chat public</button>
-      <button data-tab="chat-prive">Chat privé</button>
-      <button data-tab="medical">Fiche médicale</button>
-      <button data-tab="profil">Profil</button>
-    </nav>
-  </header>
+  <!-- Connexion -->
+  <div id="connexion">
+    <h2>Connexion</h2>
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+  </div>
 
-  <main>
-    <!-- Connexion / Inscription -->
-    <section id="auth" class="card">
-      <h2>Connexion</h2>
-      <input id="auth-email" type="email" placeholder="Email" />
-      <input id="auth-pass" type="password" placeholder="Mot de passe" />
-      <div class="row">
-        <button id="btn-login">Se connecter</button>
-        <button id="btn-register">Créer un compte parent</button>
-        <button id="btn-logout" class="secondary">Se déconnecter</button>
-      </div>
-      <p id="auth-status"></p>
-    </section>
+  <!-- Agenda visible après connexion -->
+  <div id="agenda" class="hidden">
+    <h2>Agenda</h2>
+    <p>Liste des événements...</p>
+  </div>
 
-    <!-- Agenda -->
-    <section id="agenda" class="tab card">
-      <h2>Agenda</h2>
-      <div id="events-list" class="grid"></div>
-      <div id="event-form" class="form hidden">
-        <h3>Créer un événement (admin)</h3>
-        <input id="ev-title" placeholder="Titre" />
-        <input id="ev-date" type="date" />
-        <textarea id="ev-desc" placeholder="Description"></textarea>
-        <input id="ev-image" type="file" accept="image/*" />
-        <button id="ev-save">Publier</button>
-        <p class="hint">L'événement s'ajoute automatiquement au calendrier.</p>
-      </div>
-    </section>
+  <!-- Panneaux selon rôle -->
+  <div id="adminPanel" class="hidden">
+    <h3>Président (Admin)</h3>
+    <button onclick="logout()">Déconnexion</button>
+    <p>Créer parents, enfants, animateurs, événements.</p>
+  </div>
 
-    <!-- Photos -->
-    <section id="photos" class="tab card">
-      <h2>Photos</h2>
-      <div id="album-list" class="grid"></div>
-      <div id="photo-form" class="form hidden">
-        <h3>Ajouter une photo (admin)</h3>
-        <input id="ph-activity" placeholder="Nom de l'activité" />
-        <textarea id="ph-desc" placeholder="Description"></textarea>
-        <input id="ph-file" type="file" accept="image/*" />
-        <button id="ph-upload">Uploader</button>
-      </div>
-    </section>
+  <div id="animateurPanel" class="hidden">
+    <h3>Animateur</h3>
+    <button onclick="logout()">Déconnexion</button>
+    <p>Gérer les événements.</p>
+  </div>
 
-    <!-- Inscriptions -->
-    <section id="inscriptions" class="tab card">
-      <h2>Inscriptions</h2>
-      <div id="insc-admin" class="hidden">
-        <h3>Ajouter un enfant (admin)</h3>
-        <input id="child-name" placeholder="Nom de l'enfant" />
-        <input id="child-parent-email" type="email" placeholder="Email du parent" />
-        <button id="child-add">Ajouter</button>
-      </div>
-      <div id="insc-parent">
-        <h3>Mes enfants</h3>
-        <ul id="children-list"></ul>
-      </div>
-    </section>
+  <div id="parentPanel" class="hidden">
+    <h3>Parent</h3>
+    <button onclick="logout()">Déconnexion</button>
+    <p>Voir ses enfants et l’agenda.</p>
+  </div>
 
-    <!-- Chat public -->
-    <section id="chat-public" class="tab card">
-      <h2>Chat public</h2>
-      <div id="pub-messages" class="messages"></div>
-      <div class="row">
-        <input id="pub-input" placeholder="Votre message..." />
-        <button id="pub-send">Envoyer</button>
-      </div>
-    </section>
-
-    <!-- Chat privé -->
-    <section id="chat-prive" class="tab card">
-      <h2>Chat privé</h2>
-      <p class="hint">Conversation entre l'admin et le parent (100% privée).</p>
-      <div id="priv-messages" class="messages"></div>
-      <div class="row">
-        <input id="priv-input" placeholder="Votre message..." />
-        <button id="priv-send">Envoyer</button>
-      </div>
-    </section>
-
-    <!-- Fiche médicale -->
-    <section id="medical" class="tab card">
-      <h2>Fiche médicale</h2>
-      <div id="med-admin" class="hidden">
-        <h3>Créer/mettre à jour (admin)</h3>
-        <input id="med-child" placeholder="Nom de l'enfant" />
-        <textarea id="med-data" placeholder="Infos médicales (allergies, traitements, personne à contacter)"></textarea>
-        <button id="med-save">Enregistrer (chiffré)</button>
-      </div>
-      <div id="med-view">
-        <h3>Voir la fiche de mon enfant</h3>
-        <input id="med-view-child" placeholder="Nom de l'enfant" />
-        <button id="med-load">Afficher</button>
-        <pre id="med-output"></pre>
-      </div>
-      <p class="hint">Les données sont chiffrées côté navigateur et stockées sécurisées.</p>
-    </section>
-
-    <!-- Profil -->
-    <section id="profil" class="tab card">
-      <h2>Profil</h2>
-      <p id="user-info">Non connecté</p>
-    </section>
-  </main>
-
-  <footer>
-    <small>Patro – Prototype gratuit. Respect des données et simplicité de navigation.</small>
-  </footer>
-
-  <script src="app.js"></script>
+  <div id="enfantPanel" class="hidden">
+    <h3>Enfant</h3>
+    <button onclick="logout()">Déconnexion</button>
+    <p>Voir agenda et photos.</p>
+  </div>
 </body>
 </html>
