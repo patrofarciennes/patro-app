@@ -2,49 +2,91 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Patro App</title>
+  <title>Patro App – blocs</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Firebase SDK -->
   <script type="module" src="app.js"></script>
 </head>
 <body>
-  <!-- Connexion -->
-  <div id="connexion">
+
+  <!-- BLOC: Connexion -->
+  <section id="bloc-connexion" class="bloc">
     <h2>Connexion</h2>
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Mot de passe">
-    <button onclick="login()">Se connecter</button>
-  </div>
+    <div class="bloc-content">
+      <input id="login-email" type="email" placeholder="Email">
+      <input id="login-pass" type="password" placeholder="Mot de passe">
+      <button id="btn-login">Se connecter</button>
+    </div>
+  </section>
 
-  <!-- Agenda visible après connexion -->
-  <div id="agenda" class="hidden">
+  <!-- BLOC: Barre de rôle et déconnexion -->
+  <section id="bloc-session" class="bloc hidden">
+    <h2>Session</h2>
+    <div class="bloc-content">
+      <div><strong>Utilisateur:</strong> <span id="user-email">—</span></div>
+      <div><strong>Rôle:</strong> <span id="user-role">—</span></div>
+      <button id="btn-logout">Se déconnecter</button>
+    </div>
+  </section>
+
+  <!-- BLOC: Agenda (visible pour tous les rôles connectés) -->
+  <section id="bloc-agenda" class="bloc hidden">
     <h2>Agenda</h2>
-    <p>Liste des événements...</p>
-  </div>
+    <div class="bloc-content">
+      <div id="agenda-list">Aucun événement pour le moment.</div>
+    </div>
+  </section>
 
-  <!-- Panneaux selon rôle -->
-  <div id="adminPanel" class="hidden">
-    <h3>Président (Admin)</h3>
-    <button onclick="logout()">Déconnexion</button>
-    <p>Créer parents, enfants, animateurs, événements.</p>
-  </div>
+  <!-- BLOC: Création d’événements (admin et animateur) -->
+  <section id="bloc-events-admin" class="bloc hidden">
+    <h2>Créer un événement</h2>
+    <div class="bloc-content form-grid">
+      <input id="ev-title" type="text" placeholder="Titre">
+      <input id="ev-date" type="date">
+      <textarea id="ev-desc" placeholder="Description"></textarea>
+      <button id="btn-create-event">Publier l’événement</button>
+      <div class="hint">Visible si rôle = admin ou animateur</div>
+    </div>
+  </section>
 
-  <div id="animateurPanel" class="hidden">
-    <h3>Animateur</h3>
-    <button onclick="logout()">Déconnexion</button>
-    <p>Gérer les événements.</p>
-  </div>
+  <!-- BLOC: Gestion des comptes (admin) -->
+  <section id="bloc-comptes-admin" class="bloc hidden">
+    <h2>Gestion des comptes</h2>
+    <div class="bloc-content form-grid">
+      <input id="new-name" type="text" placeholder="Nom et prénom">
+      <input id="new-email" type="email" placeholder="Email parent/animateur">
+      <select id="new-role">
+        <option value="parent">Parent</option>
+        <option value="enfant">Enfant</option>
+        <option value="animateur">Animateur</option>
+        <option value="admin">Président (Admin)</option>
+      </select>
+      <select id="new-section">
+        <option value="poussin">Poussin</option>
+        <option value="benjamin">Benjamin</option>
+        <option value="chevalier">Chevalier</option>
+        <option value="conquerant">Conquérant</option>
+        <option value="aventurier">Aventurier</option>
+      </select>
+      <button id="btn-create-user">Créer l’utilisateur (rôle/section)</button>
+      <div class="hint">Visible si rôle = admin (Président)</div>
+    </div>
+  </section>
 
-  <div id="parentPanel" class="hidden">
-    <h3>Parent</h3>
-    <button onclick="logout()">Déconnexion</button>
-    <p>Voir ses enfants et l’agenda.</p>
-  </div>
+  <!-- BLOC: Espace parent (lecture enfants, etc.) -->
+  <section id="bloc-parent" class="bloc hidden">
+    <h2>Espace Parent</h2>
+    <div class="bloc-content">
+      <div id="parent-children">Vos enfants apparaîtront ici…</div>
+    </div>
+  </section>
 
-  <div id="enfantPanel" class="hidden">
-    <h3>Enfant</h3>
-    <button onclick="logout()">Déconnexion</button>
-    <p>Voir agenda et photos.</p>
-  </div>
+  <!-- BLOC: Espace enfant -->
+  <section id="bloc-enfant" class="bloc hidden">
+    <h2>Espace Enfant</h2>
+    <div class="bloc-content">
+      <p>Agenda et photos accessibles.</p>
+    </div>
+  </section>
+
 </body>
 </html>
