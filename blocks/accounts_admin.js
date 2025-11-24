@@ -4,6 +4,7 @@ import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-
 export const AccountsAdminBloc = {
   init() {
     const btn = document.getElementById("btn-create-user");
+    if (!btn) return;
     if (!btn.dataset.wired) {
       btn.dataset.wired = "1";
       btn.addEventListener("click", async () => {
@@ -14,7 +15,7 @@ export const AccountsAdminBloc = {
         if (!name || !email) return alert("Nom et email requis.");
 
         try {
-          // Profil Firestore indexé par email (simple). Pour indexer par uid, lie après inscription.
+          // Crée un profil Firestore indexé par email (simple)
           await setDoc(doc(db, "profiles", email), {
             name, email, role, section,
             createdAt: new Date().toISOString()
