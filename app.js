@@ -97,6 +97,10 @@ async function routeDisplayForUser(user) {
   show("bloc-agenda");
   await AgendaBloc.init(); // charger la liste des événements
 
+  // afficher bloc contact pour tous les connectés
+show("bloc-contact");
+await ContactBloc.init(user);
+
   // visibilité par rôle
   if (role === "admin") {
     show("bloc-events-admin");
