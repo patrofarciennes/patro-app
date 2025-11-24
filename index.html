@@ -28,6 +28,26 @@
     </div>
   </section>
 
+  <!-- BLOC: Contact Patro (email cliquable + téléphones) -->
+<section id="bloc-contact" class="bloc hidden">
+  <h2>Contact Patro de Farciennes</h2>
+  <div class="bloc-content">
+    <div><strong>Email :</strong> <a id="patro-email" href="mailto:patrofarciennes@gmail.com">patrofarciennes@gmail.com</a></div>
+
+    <div style="margin-top:12px;"><strong>Téléphones :</strong></div>
+    <ul id="phone-list" style="margin:8px 0 12px 18px; padding:0; list-style:disc;">
+      <li>Aucun numéro enregistré.</li>
+    </ul>
+
+    <!-- Contrôles visibles seulement pour l'admin -->
+    <div id="phone-admin-controls" class="hidden">
+      <input id="new-phone" type="text" placeholder="Nouveau numéro (ex: +32 123 45 67)" />
+      <button id="btn-add-phone">Ajouter numéro</button>
+      <div class="hint">Max 10 numéros. L'admin peut supprimer.</div>
+    </div>
+  </div>
+</section>
+
   <!-- BLOC: Agenda (lecture) -->
   <section id="bloc-agenda" class="bloc hidden">
     <h2>Agenda</h2>
