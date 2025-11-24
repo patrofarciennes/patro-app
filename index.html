@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Patro App – blocs</title>
-  <link rel="stylesheet" href="styles.css">
-  <script type="module" src="app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- App bootstrap -->
+  <script type="module" src="./app.js"></script>
 </head>
 <body>
 
@@ -12,13 +14,13 @@
   <section id="bloc-connexion" class="bloc">
     <h2>Connexion</h2>
     <div class="bloc-content">
-      <input id="login-email" type="email" placeholder="Email">
-      <input id="login-pass" type="password" placeholder="Mot de passe">
+      <input id="login-email" type="email" placeholder="Email" />
+      <input id="login-pass" type="password" placeholder="Mot de passe" />
       <button id="btn-login">Se connecter</button>
     </div>
   </section>
 
-  <!-- BLOC: Barre de rôle et déconnexion -->
+  <!-- BLOC: Session -->
   <section id="bloc-session" class="bloc hidden">
     <h2>Session</h2>
     <div class="bloc-content">
@@ -28,7 +30,7 @@
     </div>
   </section>
 
-  <!-- BLOC: Agenda (visible pour tous les rôles connectés) -->
+  <!-- BLOC: Agenda (lecture) -->
   <section id="bloc-agenda" class="bloc hidden">
     <h2>Agenda</h2>
     <div class="bloc-content">
@@ -36,15 +38,15 @@
     </div>
   </section>
 
-  <!-- BLOC: Création d’événements (admin et animateur) -->
+  <!-- BLOC: Création d’événements (admin/animateur) -->
   <section id="bloc-events-admin" class="bloc hidden">
     <h2>Créer un événement</h2>
     <div class="bloc-content form-grid">
-      <input id="ev-title" type="text" placeholder="Titre">
-      <input id="ev-date" type="date">
+      <input id="ev-title" type="text" placeholder="Titre" />
+      <input id="ev-date" type="date" />
       <textarea id="ev-desc" placeholder="Description"></textarea>
       <button id="btn-create-event">Publier l’événement</button>
-      <div class="hint">Visible si rôle = admin ou animateur</div>
+      <div class="hint">Visible si rôle = admin (Président) ou animateur</div>
     </div>
   </section>
 
@@ -52,8 +54,8 @@
   <section id="bloc-comptes-admin" class="bloc hidden">
     <h2>Gestion des comptes</h2>
     <div class="bloc-content form-grid">
-      <input id="new-name" type="text" placeholder="Nom et prénom">
-      <input id="new-email" type="email" placeholder="Email parent/animateur">
+      <input id="new-name" type="text" placeholder="Nom et prénom" />
+      <input id="new-email" type="email" placeholder="Email parent/animateur" />
       <select id="new-role">
         <option value="parent">Parent</option>
         <option value="enfant">Enfant</option>
@@ -67,12 +69,12 @@
         <option value="conquerant">Conquérant</option>
         <option value="aventurier">Aventurier</option>
       </select>
-      <button id="btn-create-user">Créer l’utilisateur (rôle/section)</button>
-      <div class="hint">Visible si rôle = admin (Président)</div>
+      <button id="btn-create-user">Créer le profil</button>
+      <div class="hint">Crée un profil Firestore avec rôle/section (auth à créer via Firebase Authentication ou inscription)</div>
     </div>
   </section>
 
-  <!-- BLOC: Espace parent (lecture enfants, etc.) -->
+  <!-- BLOC: Espace parent -->
   <section id="bloc-parent" class="bloc hidden">
     <h2>Espace Parent</h2>
     <div class="bloc-content">
