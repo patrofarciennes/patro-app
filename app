@@ -1,11 +1,11 @@
 // === 1) Config Firebase (remplace par ta config) ===
 const firebaseConfig = {
-  apiKey: "REMPLACE",
-  authDomain: "REMPLACE.firebaseapp.com",
-  projectId: "REMPLACE",
-  storageBucket: "REMPLACE.appspot.com",
-  messagingSenderId: "REMPLACE",
-  appId: "REMPLACE"
+  apiKey: "AIzaSyBJtxq8jASxxMrAs4a-_B8LJ2TUjoADYtU",
+  authDomain: "patrofarcienes.firebaseapp.com",
+  projectId: "patrofarcienes",
+  storageBucket: "patrofarcienes.firebasestorage.app",
+  messagingSenderId: "659827925488",
+  appId: "1:659827925488:web:cc66139109ce85185f7d35"
 };
 
 firebase.initializeApp(firebaseConfig);
