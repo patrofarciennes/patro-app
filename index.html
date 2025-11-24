@@ -56,17 +56,23 @@
     </div>
   </section>
 
-  <!-- BLOC: Création d’événements (admin/animateur) -->
-  <section id="bloc-events-admin" class="bloc hidden">
-    <h2>Créer un événement</h2>
-    <div class="bloc-content form-grid">
-      <input id="ev-title" type="text" placeholder="Titre" />
-      <input id="ev-date" type="date" />
-      <textarea id="ev-desc" placeholder="Description"></textarea>
-      <button id="btn-create-event">Publier l’événement</button>
-      <div class="hint">Visible si rôle = admin (Président) ou animateur</div>
-    </div>
-  </section>
+<!-- BLOC: Création d’événements (admin/animateur) -->
+<section id="bloc-events-admin" class="bloc hidden">
+  <h2>Créer un événement</h2>
+  <div class="bloc-content form-grid">
+    <input id="ev-title" type="text" placeholder="Titre" />
+    <input id="ev-date" type="date" />
+    <textarea id="ev-desc" placeholder="Description"></textarea>
+
+    <!-- Nouveau : upload image pour la bannière -->
+    <label for="ev-image" style="font-size:13px; color:#6b7280; margin-top:6px;">Bannière (image)</label>
+    <input id="ev-image" type="file" accept="image/*" />
+
+    <button id="btn-create-event">Publier l’événement</button>
+    <div class="hint">Visible si rôle = admin (Président) ou animateur</div>
+  </div>
+</section>
+
 
   <!-- BLOC: Gestion des comptes (admin) -->
   <section id="bloc-comptes-admin" class="bloc hidden">
