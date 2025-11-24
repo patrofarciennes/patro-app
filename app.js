@@ -12,7 +12,7 @@ import { AccountsAdminBloc } from "./blocks/accounts_admin.js";
 import { ParentBloc } from "./blocks/parent.js";
 import { EnfantBloc } from "./blocks/enfant.js";
 
-// Your Firebase configuration (tes vraies clés)
+// Configuration Firebase (déjà fournie)
 const firebaseConfig = {
   apiKey: "AIzaSyBJtxq8jASxxMrAs4a-_B8LJ2TUjoADYtU",
   authDomain: "patrofarcienes.firebaseapp.com",
@@ -43,20 +43,31 @@ export async function getUserProfile(uid) {
 // BLOC: Session (login/logout + routeur d’affichage)
 // ================================
 function wireSessionButtons() {
-  $("btn-login").addEventListener("click", async () => {
-    const email = $("login-email").value.trim();
-    const pass = $("login-pass").value.trim();
-    if (!email || !pass) return alert("Email et mot de passe requis.");
-    try {
-      await signInWithEmailAndPassword(auth, email, pass);
-    } catch (e) {
-      alert("Erreur de connexion: " + e.message);
-    }
-  });
+  const btnLogin = $("btn-login");
+  const btnLogout = $("btn-logout");
 
-  $("btn-logout").addEventListener("click", async () => {
-    await signOut(auth);
-  });
+  if (btnLogin) {
+    btnLogin.addEventListener("click", async () => {
+      const email = $("login-email").value.trim();
+      const pass = $("login-pass").value.trim();
+      if (!email || !pass) return alert("Email et mot de passe requis.");
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (e) {
+        alert("Erreur de connexion: " + e.message);
+      }
+    });
+  }
+
+  if (btnLogout) {
+    btnLogout.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+  }
 }
 
 async function routeDisplayForUser(user) {
@@ -114,8 +125,12 @@ async function routeDisplayForUser(user) {
   }
 }
 
+// Attacher les boutons après chargement DOM
+document.addEventListener("DOMContentLoaded", () => {
+  wireSessionButtons();
+});
+
+// Écouter l'état d'authentification
 onAuthStateChanged(auth, (user) => {
   routeDisplayForUser(user);
 });
-
-wireSessionButtons();
